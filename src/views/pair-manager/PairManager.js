@@ -13,43 +13,49 @@ import sbird2 from 'src/assets/images/birdpics/SONG BIRDS/gray catbird.jpg';
 // --- BIRD CARD --- // 
 const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
     return (
-        <Card>
+        <Card sx={{ padding: 1, borderRadius: 1, boxShadow: 1, backgroundColor: '#edf1fa' }}>
             <Grid container spacing={2}>
-                {/* Badge */}
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', marginTop: '15px' }}>
+                {/* Row 1: Badge */}
+                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginTop: 2 }}>
                     <Badge
                         color={bird.status === 'Active' ? 'success' : bird.status === 'Dead' ? 'error' : 'default'}
                         badgeContent={bird.status}
-                        sx={{ fontWeight: 'bold', marginBottom: '10px' }}
-                    />
-                </Grid>
-
-                {/* Image */}
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <img
-                        src={bird.imageUrl}
-                        alt={bird.name}
-                        style={{
-                            height: '85px',
-                            width: '85px',
-                            borderRadius: '8px',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                            display: 'block',
-                            margin: 'auto'
+                        sx={{
+                            fontWeight: 'bold',
+                            marginBottom: 1,
+                            '.MuiBadge-badge': {
+                                fontSize: '0.7rem',
+                                height: '16px',
+                                minWidth: '15px',
+                                borderRadius: '10px',
+                                right: '25px',
+                            }
                         }}
                     />
                 </Grid>
 
-                {/* Bird Information */}
-                <Grid item xs={12} style={{ padding: '10px' }}>
-                    <div style={{ padding: '4px', marginTop: '0', marginLeft: '8px' }}>
+                {/* Row 2: Image and Description */}
+                <Grid item xs={12}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'300px', maxHeight:'250px' }}>
+                        <img
+                            src={bird.imageUrl}
+                            alt={bird.name}
+                            style={{
+                                height: '85px',
+                                width: '85px',
+                                borderRadius: '8px',
+                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                marginBottom: '16px'
+                            }}
+                        />
                         <Typography variant="h6" gutterBottom>{bird.name}</Typography>
                         <Typography variant="body2" gutterBottom><b>Band Number:</b> {bird.bandNumber}</Typography>
                         <Typography variant="body2" gutterBottom><b>Gender:</b> {bird.sex}</Typography>
                         <Typography variant="body2" gutterBottom><b>Date of Branding:</b> {bird.dateOfBanding}</Typography>
                         <Typography variant="body2" gutterBottom><b>Date of Birth:</b> {bird.dateOfBirth}</Typography>
-                    </div>
+                    </Box>
                 </Grid>
+
             </Grid>
         </Card>
     );
@@ -185,7 +191,6 @@ const AddPairModal = ({ birds, isOpen, onClose, onAddPair }) => {
                 </Button>
             </Box>
         </Modal>
-
     );
 
 
@@ -382,15 +387,15 @@ const PairManager = () => {
                         {row.map((pair, pairIndex) => (
                             <Grid item xs={12} sm={4} key={pairIndex}>
                                 <Card
-                                   // sx={{
-                                      //  backgroundColor: '#ffffff',
-                                       // '&:hover': {
-                                      //      backgroundColor: '#ecf2ff',
-                                       //     transform: 'scale(1.04)', // Smaller scale for zoom in effect
-                                       //     transition: 'transform 0.3s ease-in-out', // Smooth transition
-                                       // },
-                                       // marginBottom: '15px' // Added margin bottom directly to Card component
-                                   // }}
+                                // sx={{
+                                //  backgroundColor: '#ffffff',
+                                // '&:hover': {
+                                //      backgroundColor: '#ecf2ff',
+                                //     transform: 'scale(1.04)', // Smaller scale for zoom in effect
+                                //     transition: 'transform 0.3s ease-in-out', // Smooth transition
+                                // },
+                                // marginBottom: '15px' // Added margin bottom directly to Card component
+                                // }}
                                 >
                                     {/* Pair Information */}
 
@@ -400,23 +405,17 @@ const PairManager = () => {
 
                                     <Grid container spacing={2} alignItems="center">
                                         {/* Pair Number */}
-                                        <Grid item xs={12} sm={4}>
-                                            <Typography variant="subtitle1" color="textSecondary">
+                                        <Grid item xs={12} sm={12}>
+                                            <Typography variant="body2" color="textSecondary">
                                                 <b>Pair Number:</b> {pairs.findIndex(p => p === pair) + 1}
                                             </Typography>
-                                        </Grid>
-                                        {/* Nest */}
-                                        <Grid item xs={12} sm={8}>
-                                            <Typography variant="subtitle1" color="textSecondary">
+
+                                            <Typography variant="body2" color="textSecondary">
                                                 <b>Nest:</b> {pair.nest}
                                             </Typography>
                                         </Grid>
                                         {/* Date of Beginning */}
-                                        <Grid item xs={12} sm={12}>
-                                            <Typography variant="subtitle1" color="textSecondary">
-                                                <b>Date of Beginning:</b> {pair.dateOfBeginning}
-                                            </Typography>
-                                        </Grid>
+
                                     </Grid>
 
 
@@ -430,6 +429,12 @@ const PairManager = () => {
                                         {/* Second Column: Female Bird Card */}
                                         <Grid item xs={12} sm={6}>
                                             <BirdCard bird={pair.female} index={pairIndex * 2 + 1} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} />
+                                        </Grid>
+
+                                        <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
+                                            <Typography variant="caption" color="textSecondary">
+                                                <b>Date of Beginning:</b> {pair.dateOfBeginning}
+                                            </Typography>
                                         </Grid>
                                     </Grid>
 

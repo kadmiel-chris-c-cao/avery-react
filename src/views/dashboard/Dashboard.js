@@ -19,11 +19,7 @@ const Dashboard = () => {
                 <Grid item sm={12} lg={12}>
                     <TopCards />
                 </Grid>
-                
-
-
-
-
+            
                 {/* Sidebar */}
                 <Grid item xs={12} lg={8}>
                     <RevenueUpdates />
@@ -37,10 +33,7 @@ const Dashboard = () => {
                     <Grid item xs={12} sm={12} lg={12}>
                         <MonthlyEarnings />
                     </Grid>
-
                 </Grid>
-
-
               
             </Grid>
         </Container>
