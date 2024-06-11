@@ -36,7 +36,7 @@ const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
 
                 {/* Row 2: Image and Description */}
                 <Grid item xs={12}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height:'300px', maxHeight:'250px' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '190px', maxHeight: '250px' }}>
                         <img
                             src={bird.imageUrl}
                             alt={bird.name}
@@ -51,9 +51,15 @@ const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
                         <Typography variant="h6" gutterBottom>{bird.name}</Typography>
                         <Typography variant="body2" gutterBottom><b>Band Number:</b> {bird.bandNumber}</Typography>
                         <Typography variant="body2" gutterBottom><b>Gender:</b> {bird.sex}</Typography>
-                        <Typography variant="body2" gutterBottom><b>Date of Branding:</b> {bird.dateOfBanding}</Typography>
+                        {/*
+                                  <Typography variant="body2" gutterBottom><b>Date of Branding:</b> {bird.dateOfBanding}</Typography>
                         <Typography variant="body2" gutterBottom><b>Date of Birth:</b> {bird.dateOfBirth}</Typography>
+                        */}
                     </Box>
+                </Grid>
+
+                <Grid item xs={12}>
+
                 </Grid>
 
             </Grid>
