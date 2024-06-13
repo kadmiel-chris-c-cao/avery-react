@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card, Select, FormControl, Badge, InputLabel, } from '@mui/material';
-
+import { Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card, Select, FormControl, Badge, InputLabel, Tabs, Tab } from '@mui/material';
 // Import bird images
 import lbird1 from 'src/assets/images/birdpics/LOVE BIRDS/Fischer\'s lovebird.jpg';
 import lbird2 from 'src/assets/images/birdpics/LOVE BIRDS/Rosy-faced lovebird.jpg';
@@ -10,10 +9,11 @@ import sbird1 from 'src/assets/images/birdpics/SONG BIRDS/blackcap.jpg';
 import sbird2 from 'src/assets/images/birdpics/SONG BIRDS/gray catbird.jpg';
 
 
+
 // --- BIRD CARD --- // 
 const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
     return (
-        <Card sx={{ padding: 1, borderRadius: 1, boxShadow: 1, backgroundColor: '#edf1fa' }}>
+        <Card sx={{ padding: 1, borderRadius: 1, boxShadow: 1, backgroundColor: '#e8f7ff' }}>
             <Grid container spacing={2}>
                 {/* Row 1: Badge */}
                 <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginTop: 2 }}>
@@ -36,7 +36,7 @@ const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
 
                 {/* Row 2: Image and Description */}
                 <Grid item xs={12}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '190px', maxHeight: '250px' }}>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '180px', maxHeight: '200px' }}>
                         <img
                             src={bird.imageUrl}
                             alt={bird.name}
@@ -205,7 +205,30 @@ const AddPairModal = ({ birds, isOpen, onClose, onAddPair }) => {
 const PairManager = () => {
     const [selectedCage, setSelectedCage] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
+    const [tabValue, setTabValue] = useState(0); // State for active tab
 
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
+    };
+
+
+    const CustomTabPanel = ({ children, value, index, ...other }) => {
+        return (
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`simple-tabpanel-${index}`}
+                aria-labelledby={`simple-tab-${index}`}
+                {...other}
+            >
+                {value === index && (
+                    <Box sx={{ p: 3 }}>
+                        {children}
+                    </Box>
+                )}
+            </div>
+        );
+    };
 
 
     // DEFAULT BIRD VIEW PAIR //
@@ -444,12 +467,61 @@ const PairManager = () => {
                                         </Grid>
                                     </Grid>
 
+
+                                    {/* Tabs */}
+                                    <Container maxWidth="sm" sx={{ mt: 1 }}>
+                                        <Grid container justifyContent="center"> {/* Center aligns the Grid container */}
+                                            <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}> {/* Ensure full width */}
+                                                <Tabs
+                                                    value={tabValue}
+                                                    onChange={handleTabChange}
+                                                    aria-label="basic tabs example"
+                                                    variant="scrollable"
+                                                    scrollButtons="auto"
+                                                    sx={{
+                                                        minHeight: 'unset', // Ensure minHeight is unset for smaller tabs
+                                                        '& .MuiTab-root': {
+                                                            minWidth: 'auto', // Adjust the minimum width of tabs
+                                                            padding: '6px 12px', // Add padding to tabs for better touch area
+                                                            fontSize: '0.75rem', // Reduce font size for smaller screens
+                                                        },
+                                                    }}
+                                                >
+                                                    <Tab label="Manage Pairs" />
+                                                    <Tab label="Tab Two" />
+                                                    {/* Add more tabs as needed */}
+                                                </Tabs>
+                                            </Box>
+                                        </Grid>
+                                        <Grid container spacing={2} justifyContent="center"> {/* Center aligns and adds spacing */}
+                                            <CustomTabPanel value={tabValue} index={0}>
+                                                <Grid item xs={12}>
+                                                    <Typography variant="h6">Tab One Content</Typography>
+                                                    {/* Add content for Tab One here */}
+                                                </Grid>
+                                            </CustomTabPanel>
+                                            <CustomTabPanel value={tabValue} index={1}>
+                                                <Grid item xs={12}>
+                                                    <Typography variant="h6">Tab Two Content</Typography>
+                                                    {/* Add content for Tab Two here */}
+                                                </Grid>
+                                            </CustomTabPanel>
+                                            {/* Add more CustomTabPanels as needed */}
+                                        </Grid>
+                                    </Container>
+
+
                                 </Card>
                             </Grid>
                         ))}
                     </Grid>
                 ))}
+
+
+
             </Grid>
+
+
 
 
             <AddPairModal birds={birds} isOpen={isModalOpen} onClose={handleCloseModal} onAddPair={handleAddPair} />
