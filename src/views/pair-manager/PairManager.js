@@ -36,7 +36,36 @@ const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
 
                 {/* Row 2: Image and Description */}
                 <Grid item xs={12}>
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '180px', maxHeight: '200px' }}>
+
+                    <Grid container>
+                        <Grid item>
+                            <img
+                                src={bird.imageUrl}
+                                alt={bird.name}
+                                style={{
+                                    height: '85px',
+                                    width: '85px',
+                                    borderRadius: '8px',
+                                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                    marginBottom: '16px'
+                                }}
+                            />
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="h6" gutterBottom>{bird.name}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="body2" gutterBottom><b>Band Number:</b> {bird.bandNumber}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography variant="body2" gutterBottom><b>Gender:</b> {bird.sex}</Typography>
+                        </Grid>
+                        <Grid item>
+
+                        </Grid>
+                    </Grid>
+
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '175px', maxHeight: '200px' }}>
                         <img
                             src={bird.imageUrl}
                             alt={bird.name}
@@ -469,9 +498,9 @@ const PairManager = () => {
 
 
                                     {/* Tabs */}
-                                    <Container maxWidth="sm" sx={{ mt: 1 }}>
-                                        <Grid container justifyContent="center"> {/* Center aligns the Grid container */}
-                                            <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}> {/* Ensure full width */}
+                                    <Container maxWidth="sm">
+                                        <Grid container justifyContent="center">
+                                            <Box sx={{ width: '100%', borderBottom: 1, borderColor: 'divider' }}>
                                                 <Tabs
                                                     value={tabValue}
                                                     onChange={handleTabChange}
@@ -483,30 +512,26 @@ const PairManager = () => {
                                                         '& .MuiTab-root': {
                                                             minWidth: 'auto', // Adjust the minimum width of tabs
                                                             padding: '6px 12px', // Add padding to tabs for better touch area
-                                                            fontSize: '0.75rem', // Reduce font size for smaller screens
+                                                            fontSize: '0.8rem', // Reduce font size for smaller screens
                                                         },
                                                     }}
                                                 >
-                                                    <Tab label="Manage Pairs" />
-                                                    <Tab label="Tab Two" />
-                                                    {/* Add more tabs as needed */}
+                                                    <Tab label="Clutches" />
+                                                    <Tab label="Eggs" />
                                                 </Tabs>
                                             </Box>
                                         </Grid>
-                                        <Grid container spacing={2} justifyContent="center"> {/* Center aligns and adds spacing */}
-                                            <CustomTabPanel value={tabValue} index={0}>
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h6">Tab One Content</Typography>
-                                                    {/* Add content for Tab One here */}
-                                                </Grid>
-                                            </CustomTabPanel>
-                                            <CustomTabPanel value={tabValue} index={1}>
-                                                <Grid item xs={12}>
-                                                    <Typography variant="h6">Tab Two Content</Typography>
-                                                    {/* Add content for Tab Two here */}
-                                                </Grid>
-                                            </CustomTabPanel>
-                                            {/* Add more CustomTabPanels as needed */}
+                                        <Grid container spacing={2} justifyContent="center">
+                                            <Grid item xs={12}>
+                                                <CustomTabPanel value={tabValue} index={0}>
+                                                    <Typography variant="h6">Clutches</Typography>
+                                                    {/* Add your content for Clutches here */}
+                                                </CustomTabPanel>
+                                                <CustomTabPanel value={tabValue} index={1}>
+                                                    <Typography variant="h6">Eggs</Typography>
+                                                    {/* Add your content for Eggs here */}
+                                                </CustomTabPanel>
+                                            </Grid>
                                         </Grid>
                                     </Container>
 
