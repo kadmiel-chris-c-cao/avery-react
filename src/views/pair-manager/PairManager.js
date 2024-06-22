@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card, Select, FormControl, Badge, InputLabel, Tabs, Tab } from '@mui/material';
+import {
+    Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card, Select, FormControl, Badge, InputLabel, Tabs, Tab,
+    Table, Paper, TableContainer, TableHead, TableRow, TableBody, TableCell,
+} from '@mui/material';
 // Import bird images
 import lbird1 from 'src/assets/images/birdpics/LOVE BIRDS/Fischer\'s lovebird.jpg';
 import lbird2 from 'src/assets/images/birdpics/LOVE BIRDS/Rosy-faced lovebird.jpg';
@@ -13,22 +16,21 @@ import sbird2 from 'src/assets/images/birdpics/SONG BIRDS/gray catbird.jpg';
 // --- BIRD CARD --- // 
 const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
     return (
-        <Card sx={{ padding: 1, borderRadius: 1, boxShadow: 1, backgroundColor: '#e8f7ff' }}>
+        <Card sx={{ padding: 1, borderRadius: 1, boxShadow: 1, backgroundColor: '#ecf3fb' }}>
             <Grid container spacing={2}>
                 {/* Row 1: Badge */}
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginTop: 2 }}>
+                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginTop: 1 }}>
                     <Badge
                         color={bird.status === 'Active' ? 'success' : bird.status === 'Dead' ? 'error' : 'default'}
                         badgeContent={bird.status}
                         sx={{
                             fontWeight: 'bold',
-                            marginBottom: 1,
                             '.MuiBadge-badge': {
                                 fontSize: '0.7rem',
                                 height: '16px',
                                 minWidth: '15px',
-                                borderRadius: '10px',
-                                right: '25px',
+                                borderRadius: '20px',
+                                right: '20px',
                             }
                         }}
                     />
@@ -36,59 +38,31 @@ const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
 
                 {/* Row 2: Image and Description */}
                 <Grid item xs={12}>
-
-                    <Grid container>
-                        <Grid item>
+                    <Grid
+                        container
+                        alignItems="center"
+                        justifyContent="center"
+                        sx={{ minHeight: '24vh', textAlign: 'center' }}
+                        spacing={2}
+                    >
+                        <Grid item xs={12}>
                             <img
                                 src={bird.imageUrl}
                                 alt={bird.name}
                                 style={{
-                                    height: '85px',
-                                    width: '85px',
-                                    borderRadius: '8px',
+                                    height: '100px',
+                                    width: '100px',
+                                    borderRadius: '9px',
                                     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                    marginBottom: '16px'
                                 }}
                             />
                         </Grid>
-                        <Grid item>
+                        <Grid item xs={12}>
                             <Typography variant="h6" gutterBottom>{bird.name}</Typography>
-                        </Grid>
-                        <Grid item>
                             <Typography variant="body2" gutterBottom><b>Band Number:</b> {bird.bandNumber}</Typography>
-                        </Grid>
-                        <Grid item>
                             <Typography variant="body2" gutterBottom><b>Gender:</b> {bird.sex}</Typography>
                         </Grid>
-                        <Grid item>
-
-                        </Grid>
                     </Grid>
-
-                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '175px', maxHeight: '200px' }}>
-                        <img
-                            src={bird.imageUrl}
-                            alt={bird.name}
-                            style={{
-                                height: '85px',
-                                width: '85px',
-                                borderRadius: '8px',
-                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                marginBottom: '16px'
-                            }}
-                        />
-                        <Typography variant="h6" gutterBottom>{bird.name}</Typography>
-                        <Typography variant="body2" gutterBottom><b>Band Number:</b> {bird.bandNumber}</Typography>
-                        <Typography variant="body2" gutterBottom><b>Gender:</b> {bird.sex}</Typography>
-                        {/*
-                                  <Typography variant="body2" gutterBottom><b>Date of Branding:</b> {bird.dateOfBanding}</Typography>
-                        <Typography variant="body2" gutterBottom><b>Date of Birth:</b> {bird.dateOfBirth}</Typography>
-                        */}
-                    </Box>
-                </Grid>
-
-                <Grid item xs={12}>
-
                 </Grid>
 
             </Grid>
@@ -286,7 +260,7 @@ const PairManager = () => {
                 cageNumber: 'Cage 1',
                 dateOfBanding: '2022-02-01',
                 dateOfBirth: '2021-02-01',
-                status: 'Active',
+                status: 'Dead',
                 originDescription: 'Native to Central Africa',
                 genetics: 'Some genetic information',
                 imageUrl: lbird2,
@@ -445,40 +419,22 @@ const PairManager = () => {
                         {row.map((pair, pairIndex) => (
                             <Grid item xs={12} sm={4} key={pairIndex}>
                                 <Card
-                                // sx={{
-                                //  backgroundColor: '#ffffff',
-                                // '&:hover': {
-                                //      backgroundColor: '#ecf2ff',
-                                //     transform: 'scale(1.04)', // Smaller scale for zoom in effect
-                                //     transition: 'transform 0.3s ease-in-out', // Smooth transition
-                                // },
-                                // marginBottom: '15px' // Added margin bottom directly to Card component
-                                // }}
+                                    // sx={{
+                                    //  backgroundColor: '#ffffff',
+                                    // '&:hover': {
+                                    //      backgroundColor: '#ecf2ff',
+                                    //     transform: 'scale(1.04)', // Smaller scale for zoom in effect
+                                    //     transition: 'transform 0.3s ease-in-out', // Smooth transition
+                                    // },
+                                    // marginBottom: '15px' // Added margin bottom directly to Card component
+                                    // }}
+                                    sx={{ marginTop: "12px" }}
                                 >
-                                    {/* Pair Information */}
 
-                                    <Typography variant="h4" color="primary" align="center" gutterBottom>
-                                        Pair Information
-                                    </Typography>
-
-                                    <Grid container spacing={2} alignItems="center">
-                                        {/* Pair Number */}
-                                        <Grid item xs={12} sm={12}>
-                                            <Typography variant="body2" color="textSecondary">
-                                                <b>Pair Number:</b> {pairs.findIndex(p => p === pair) + 1}
-                                            </Typography>
-
-                                            <Typography variant="body2" color="textSecondary">
-                                                <b>Nest:</b> {pair.nest}
-                                            </Typography>
-                                        </Grid>
-                                        {/* Date of Beginning */}
-
-                                    </Grid>
 
 
                                     {/* Bird Cards */}
-                                    <Grid container style={{ paddingTop: '12px' }} spacing={2}>
+                                    <Grid container spacing={1.5}>
                                         {/* First Column: Male Bird Card */}
                                         <Grid item xs={12} sm={6}>
                                             <BirdCard bird={pair.male} index={pairIndex * 2} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} />
@@ -488,17 +444,31 @@ const PairManager = () => {
                                         <Grid item xs={12} sm={6}>
                                             <BirdCard bird={pair.female} index={pairIndex * 2 + 1} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} />
                                         </Grid>
+                                    </Grid>
 
-                                        <Grid item xs={12} sm={12} sx={{ textAlign: 'center' }}>
-                                            <Typography variant="caption" color="textSecondary">
+                                    {/* Pair Information */}
+                                    {/*<Grid container paddingTop={1} spacing={1} alignItems="center" justifyContent={'flex'}>
+                                        <Grid item xs={12} sm={12}>
+                                            <Typography variant="body2" color="textSecondary">
+                                                <b>Pair Number:</b> {pairs.findIndex(p => p === pair) + 1}
+                                            </Typography>
+
+                                            <Typography paddingTop={0.3} variant="body2" color="textSecondary">
+                                                <b>Nest:</b> {pair.nest}
+                                            </Typography>
+
+                                            <Typography paddingTop={0.3} variant="body2" color="textSecondary">
                                                 <b>Date of Beginning:</b> {pair.dateOfBeginning}
                                             </Typography>
                                         </Grid>
-                                    </Grid>
+                                    </Grid>*/}
 
 
-                                    {/* Tabs */}
-                                    <Container maxWidth="sm">
+
+
+                                    {/* TABS - CLUTCHES AND EGGS */}
+                                    <Grid item maxWidth="sm" >
+
                                         <Grid container justifyContent="center">
                                             <Box sx={{ width: '100%', borderBottom: 1, borderColor: 'divider' }}>
                                                 <Tabs
@@ -521,36 +491,110 @@ const PairManager = () => {
                                                 </Tabs>
                                             </Box>
                                         </Grid>
-                                        <Grid container spacing={2} justifyContent="center">
+
+                                        <Grid container spacing={1} justifyContent="center">
                                             <Grid item xs={12}>
+
                                                 <CustomTabPanel value={tabValue} index={0}>
-                                                    <Typography variant="h6">Clutches</Typography>
-                                                    {/* Add your content for Clutches here */}
+                                                    <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                                        <Table size="small">
+                                                            <TableHead>
+                                                                <TableRow>
+                                                                    <TableCell>Attribute</TableCell>
+                                                                    <TableCell>Value</TableCell>
+                                                                </TableRow>
+                                                            </TableHead>
+                                                            <TableBody>
+                                                                <TableRow>
+                                                                    <TableCell>Clutch Size</TableCell>
+                                                                    <TableCell>5</TableCell>
+                                                                </TableRow>
+                                                                <TableRow>
+                                                                    <TableCell>Average Weight</TableCell>
+                                                                    <TableCell>50g</TableCell>
+                                                                </TableRow>
+                                                                <TableRow>
+                                                                    <TableCell>Incubation Period</TableCell>
+                                                                    <TableCell>21 days</TableCell>
+                                                                </TableRow>
+                                                            </TableBody>
+                                                        </Table>
+                                                    </TableContainer>
+                                                    <Box
+                                                        display="flex"
+                                                        justifyContent="center"
+                                                        alignItems="center"
+                                                        sx={{ gap: 3 }} // Adjust `gap` as needed
+                                                        paddingTop="18px"
+                                                    >
+                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Clutches</Button>
+                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Clutches</Button>
+                                                    </Box>
                                                 </CustomTabPanel>
+
                                                 <CustomTabPanel value={tabValue} index={1}>
-                                                    <Typography variant="h6">Eggs</Typography>
-                                                    {/* Add your content for Eggs here */}
+                                                    <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                                        <Table size="small">
+                                                            <TableHead>
+                                                                <TableRow>
+                                                                    <TableCell>Attribute</TableCell>
+                                                                    <TableCell>Value</TableCell>
+                                                                </TableRow>
+                                                            </TableHead>
+                                                            <TableBody>
+                                                                <TableRow>
+                                                                    <TableCell>Egg Size</TableCell>
+                                                                    <TableCell>Large</TableCell>
+                                                                </TableRow>
+                                                                <TableRow>
+                                                                    <TableCell>Color</TableCell>
+                                                                    <TableCell>White</TableCell>
+                                                                </TableRow>
+                                                                <TableRow>
+                                                                    <TableCell>Shell Thickness</TableCell>
+                                                                    <TableCell>0.5mm</TableCell>
+                                                                </TableRow>
+                                                            </TableBody>
+                                                        </Table>
+                                                    </TableContainer>
+                                                    <Box
+                                                        display="flex"
+                                                        justifyContent="center"
+                                                        alignItems="center"
+                                                        sx={{ gap: 3 }} // Adjust `gap` as needed
+                                                        paddingTop="18px"
+                                                    >
+                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Egg</Button>
+                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Egg</Button>
+                                                    </Box>
                                                 </CustomTabPanel>
+
                                             </Grid>
                                         </Grid>
-                                    </Container>
+
+                                        <Grid item xs={12}>
+
+                                        </Grid>
+
+                                    </Grid>
 
 
                                 </Card>
                             </Grid>
-                        ))}
-                    </Grid>
+                        ))
+                        }
+                    </Grid >
                 ))}
 
 
 
-            </Grid>
+            </Grid >
 
 
 
 
             <AddPairModal birds={birds} isOpen={isModalOpen} onClose={handleCloseModal} onAddPair={handleAddPair} />
-        </Container>
+        </Container >
 
     );
 };
