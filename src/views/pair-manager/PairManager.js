@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {
-    Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card, Select, FormControl, Badge, InputLabel, Tabs, Tab,
-    Table, Paper, TableContainer, TableHead, TableRow, TableBody, TableCell,
+    Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card,
+    Select, FormControl, InputLabel, Tabs, Tab, Table, Paper, TableContainer,
+    TableHead, TableRow, TableBody, TableCell,
 } from '@mui/material';
 // Import bird images
 import lbird1 from 'src/assets/images/birdpics/LOVE BIRDS/Fischer\'s lovebird.jpg';
@@ -10,65 +11,10 @@ import lbird3 from 'src/assets/images/birdpics/LOVE BIRDS/Yellow-collared lovebi
 import lbird4 from 'src/assets/images/birdpics/LOVE BIRDS/Lilian\'s lovebird.jpg';
 import sbird1 from 'src/assets/images/birdpics/SONG BIRDS/blackcap.jpg';
 import sbird2 from 'src/assets/images/birdpics/SONG BIRDS/gray catbird.jpg';
+import BirdCard from './component/BirdCard';
 
 
-
-// --- BIRD CARD --- // 
-const BirdCard = ({ bird, index, nest, dateOfBeginning }) => {
-    return (
-        <Card sx={{ padding: 1, borderRadius: 1, boxShadow: 1, backgroundColor: '#ecf3fb' }}>
-            <Grid container spacing={2}>
-                {/* Row 1: Badge */}
-                <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'end', marginTop: 1 }}>
-                    <Badge
-                        color={bird.status === 'Active' ? 'success' : bird.status === 'Dead' ? 'error' : 'default'}
-                        badgeContent={bird.status}
-                        sx={{
-                            fontWeight: 'bold',
-                            '.MuiBadge-badge': {
-                                fontSize: '0.7rem',
-                                height: '16px',
-                                minWidth: '15px',
-                                borderRadius: '20px',
-                                right: '20px',
-                            }
-                        }}
-                    />
-                </Grid>
-
-                {/* Row 2: Image and Description */}
-                <Grid item xs={12}>
-                    <Grid
-                        container
-                        alignItems="center"
-                        justifyContent="center"
-                        sx={{ minHeight: '24vh', textAlign: 'center' }}
-                        spacing={2}
-                    >
-                        <Grid item xs={12}>
-                            <img
-                                src={bird.imageUrl}
-                                alt={bird.name}
-                                style={{
-                                    height: '100px',
-                                    width: '100px',
-                                    borderRadius: '9px',
-                                    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="h6" gutterBottom>{bird.name}</Typography>
-                            <Typography variant="body2" gutterBottom><b>Band Number:</b> {bird.bandNumber}</Typography>
-                            <Typography variant="body2" gutterBottom><b>Gender:</b> {bird.sex}</Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
-
-            </Grid>
-        </Card>
-    );
-};
+<BirdCard />
 
 
 const AddPairModal = ({ birds, isOpen, onClose, onAddPair }) => {
@@ -214,7 +160,6 @@ const PairManager = () => {
         setTabValue(newValue);
     };
 
-
     const CustomTabPanel = ({ children, value, index, ...other }) => {
         return (
             <div
@@ -233,10 +178,8 @@ const PairManager = () => {
         );
     };
 
-
     // DEFAULT BIRD VIEW PAIR //
     const [pairs, setPairs] = useState([
-
         {
             male: {
                 id: 1,
@@ -251,6 +194,7 @@ const PairManager = () => {
                 genetics: 'Some genetic information',
                 imageUrl: lbird1,
                 additionalInfo: 'Additional notes about the bird.',
+                color: 'rgba(181, 234, 234, 0.3)',
             },
             female: {
                 id: 2,
@@ -265,6 +209,7 @@ const PairManager = () => {
                 genetics: 'Some genetic information',
                 imageUrl: lbird2,
                 additionalInfo: 'Additional notes about the bird.',
+                color: 'rgba(255, 188, 188, 0.3)',
             },
             nest: "Default Nest",
             dateOfBeginning: "2024-03025",
@@ -272,24 +217,6 @@ const PairManager = () => {
 
 
     ]);
-    // -------------------------- //
-
-
-
-    const handleChange = (event) => {
-        setSelectedCage(event.target.value);
-        // Fetch birds based on selected cage and setBirds
-    };
-
-    const pairsInRows = pairs.reduce((rows, pair, index) => {
-        const rowNum = Math.floor(index / 3); // Change this to 3 for three pairs per row
-        if (!rows[rowNum]) {
-            rows[rowNum] = [];
-        }
-        rows[rowNum].push(pair);
-        return rows;
-    }, []);
-
 
     // the birds library
     const birds = [
@@ -306,6 +233,7 @@ const PairManager = () => {
             genetics: 'Some genetic information',
             imageUrl: lbird1,
             additionalInfo: 'Additional notes about the bird.',
+            color: 'rgba(181, 234, 234, 0.3)',
         },
         {
             id: 2,
@@ -320,6 +248,7 @@ const PairManager = () => {
             genetics: 'Some genetic information',
             imageUrl: lbird2,
             additionalInfo: 'Additional notes about the bird.',
+            color: 'rgba(255, 188, 188, 0.3)',
         },
         {
             id: 3,
@@ -334,6 +263,7 @@ const PairManager = () => {
             genetics: 'Some genetic information',
             imageUrl: lbird3,
             additionalInfo: 'Additional notes about the bird.',
+            color: 'rgba(181, 234, 234, 0.2)',
         },
         {
             id: 4,
@@ -348,6 +278,7 @@ const PairManager = () => {
             genetics: 'Some genetic information',
             imageUrl: lbird4,
             additionalInfo: 'Additional notes about the bird.',
+            color: 'rgba(181, 234, 234, 0.2)',
         },
         {
             id: 5,
@@ -362,6 +293,7 @@ const PairManager = () => {
             genetics: 'Some genetic information',
             imageUrl: sbird1,
             additionalInfo: 'Additional notes about the bird.',
+            color: 'rgba(255, 188, 188, 0.2)',
         },
         {
             id: 6,
@@ -376,12 +308,24 @@ const PairManager = () => {
             genetics: 'Some genetic information',
             imageUrl: sbird2,
             additionalInfo: 'Additional notes about the bird.',
+            color: 'rgba(181, 234, 234, 0.2)',
         },
         // Add more birds
     ];
-    // ----------------
 
+    const handleChange = (event) => {
+        setSelectedCage(event.target.value);
+        // Fetch birds based on selected cage and setBirds
+    };
 
+    const pairsInRows = pairs.reduce((rows, pair, index) => {
+        const rowNum = Math.floor(index / 3); // Change this to 3 for three pairs per row
+        if (!rows[rowNum]) {
+            rows[rowNum] = [];
+        }
+        rows[rowNum].push(pair);
+        return rows;
+    }, []);
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
@@ -418,31 +362,18 @@ const PairManager = () => {
                     <Grid container item xs={12} key={rowIndex} spacing={2}> {/* Added spacing={2} */}
                         {row.map((pair, pairIndex) => (
                             <Grid item xs={12} sm={4} key={pairIndex}>
-                                <Card
-                                    // sx={{
-                                    //  backgroundColor: '#ffffff',
-                                    // '&:hover': {
-                                    //      backgroundColor: '#ecf2ff',
-                                    //     transform: 'scale(1.04)', // Smaller scale for zoom in effect
-                                    //     transition: 'transform 0.3s ease-in-out', // Smooth transition
-                                    // },
-                                    // marginBottom: '15px' // Added margin bottom directly to Card component
-                                    // }}
-                                    sx={{ marginTop: "12px" }}
-                                >
-
-
+                                <Card sx={{ marginTop: "12px" }} >
 
                                     {/* Bird Cards */}
                                     <Grid container spacing={1.5}>
                                         {/* First Column: Male Bird Card */}
                                         <Grid item xs={12} sm={6}>
-                                            <BirdCard bird={pair.male} index={pairIndex * 2} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} />
+                                            <BirdCard bird={pair.male} index={pairIndex * 2} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} color={pair.male.color} />
                                         </Grid>
 
                                         {/* Second Column: Female Bird Card */}
                                         <Grid item xs={12} sm={6}>
-                                            <BirdCard bird={pair.female} index={pairIndex * 2 + 1} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} />
+                                            <BirdCard bird={pair.female} index={pairIndex * 2 + 1} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} color={pair.female.color} />
                                         </Grid>
                                     </Grid>
 
@@ -462,9 +393,6 @@ const PairManager = () => {
                                             </Typography>
                                         </Grid>
                                     </Grid>*/}
-
-
-
 
                                     {/* TABS - CLUTCHES AND EGGS */}
                                     <Grid item maxWidth="sm" >
@@ -492,85 +420,85 @@ const PairManager = () => {
                                             </Box>
                                         </Grid>
 
-                                        <Grid container spacing={1} justifyContent="center">
-                                            <Grid item xs={12}>
 
-                                                <CustomTabPanel value={tabValue} index={0}>
-                                                    <TableContainer component={Paper} sx={{ width: '100%' }}>
-                                                        <Table size="small">
-                                                            <TableHead>
-                                                                <TableRow>
-                                                                    <TableCell>Attribute</TableCell>
-                                                                    <TableCell>Value</TableCell>
-                                                                </TableRow>
-                                                            </TableHead>
-                                                            <TableBody>
-                                                                <TableRow>
-                                                                    <TableCell>Clutch Size</TableCell>
-                                                                    <TableCell>5</TableCell>
-                                                                </TableRow>
-                                                                <TableRow>
-                                                                    <TableCell>Average Weight</TableCell>
-                                                                    <TableCell>50g</TableCell>
-                                                                </TableRow>
-                                                                <TableRow>
-                                                                    <TableCell>Incubation Period</TableCell>
-                                                                    <TableCell>21 days</TableCell>
-                                                                </TableRow>
-                                                            </TableBody>
-                                                        </Table>
-                                                    </TableContainer>
-                                                    <Box
-                                                        display="flex"
-                                                        justifyContent="center"
-                                                        alignItems="center"
-                                                        sx={{ gap: 3 }} // Adjust `gap` as needed
-                                                        paddingTop="18px"
-                                                    >
-                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Clutches</Button>
-                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Clutches</Button>
-                                                    </Box>
-                                                </CustomTabPanel>
+                                        <Grid item xs={12} justifyContent="center">
 
-                                                <CustomTabPanel value={tabValue} index={1}>
-                                                    <TableContainer component={Paper} sx={{ width: '100%' }}>
-                                                        <Table size="small">
-                                                            <TableHead>
-                                                                <TableRow>
-                                                                    <TableCell>Attribute</TableCell>
-                                                                    <TableCell>Value</TableCell>
-                                                                </TableRow>
-                                                            </TableHead>
-                                                            <TableBody>
-                                                                <TableRow>
-                                                                    <TableCell>Egg Size</TableCell>
-                                                                    <TableCell>Large</TableCell>
-                                                                </TableRow>
-                                                                <TableRow>
-                                                                    <TableCell>Color</TableCell>
-                                                                    <TableCell>White</TableCell>
-                                                                </TableRow>
-                                                                <TableRow>
-                                                                    <TableCell>Shell Thickness</TableCell>
-                                                                    <TableCell>0.5mm</TableCell>
-                                                                </TableRow>
-                                                            </TableBody>
-                                                        </Table>
-                                                    </TableContainer>
-                                                    <Box
-                                                        display="flex"
-                                                        justifyContent="center"
-                                                        alignItems="center"
-                                                        sx={{ gap: 3 }} // Adjust `gap` as needed
-                                                        paddingTop="18px"
-                                                    >
-                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Egg</Button>
-                                                        <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Egg</Button>
-                                                    </Box>
-                                                </CustomTabPanel>
+                                            <CustomTabPanel value={tabValue} index={0}>
+                                                <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                                    <Table size="small">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Attribute</TableCell>
+                                                                <TableCell>Value</TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell>Clutch Size</TableCell>
+                                                                <TableCell>5</TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>Average Weight</TableCell>
+                                                                <TableCell>50g</TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>Incubation Period</TableCell>
+                                                                <TableCell>21 days</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                                <Box
+                                                    display="flex"
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                    sx={{ gap: 3 }} // Adjust `gap` as needed
+                                                    paddingTop="18px"
+                                                >
+                                                    <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Clutches</Button>
+                                                    <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Clutches</Button>
+                                                </Box>
+                                            </CustomTabPanel>
 
-                                            </Grid>
+                                            <CustomTabPanel value={tabValue} index={1}>
+                                                <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                                    <Table size="small">
+                                                        <TableHead>
+                                                            <TableRow>
+                                                                <TableCell>Attribute</TableCell>
+                                                                <TableCell>Value</TableCell>
+                                                            </TableRow>
+                                                        </TableHead>
+                                                        <TableBody>
+                                                            <TableRow>
+                                                                <TableCell>Egg Size</TableCell>
+                                                                <TableCell>Large</TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>Color</TableCell>
+                                                                <TableCell>White</TableCell>
+                                                            </TableRow>
+                                                            <TableRow>
+                                                                <TableCell>Shell Thickness</TableCell>
+                                                                <TableCell>0.5mm</TableCell>
+                                                            </TableRow>
+                                                        </TableBody>
+                                                    </Table>
+                                                </TableContainer>
+                                                <Box
+                                                    display="flex"
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                    sx={{ gap: 3 }} // Adjust `gap` as needed
+                                                    paddingTop="18px"
+                                                >
+                                                    <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Egg</Button>
+                                                    <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Egg</Button>
+                                                </Box>
+                                            </CustomTabPanel>
+
                                         </Grid>
+
 
                                         <Grid item xs={12}>
 
@@ -595,7 +523,6 @@ const PairManager = () => {
 
             <AddPairModal birds={birds} isOpen={isModalOpen} onClose={handleCloseModal} onAddPair={handleAddPair} />
         </Container >
-
     );
 };
 
