@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
     Container, Grid, Typography, TextField, MenuItem, Button, Modal, Box, Card,
     Select, FormControl, InputLabel, Tabs, Tab, Table, Paper, TableContainer,
-    TableHead, TableRow, TableBody, TableCell,
+    TableHead, TableRow, TableBody, TableCell, useTheme,
 } from '@mui/material';
 // Import bird images
 import lbird1 from 'src/assets/images/birdpics/LOVE BIRDS/Fischer\'s lovebird.jpg';
@@ -13,16 +13,13 @@ import sbird1 from 'src/assets/images/birdpics/SONG BIRDS/blackcap.jpg';
 import sbird2 from 'src/assets/images/birdpics/SONG BIRDS/gray catbird.jpg';
 import BirdCard from './component/BirdCard';
 
-
 <BirdCard />
-
 
 const AddPairModal = ({ birds, isOpen, onClose, onAddPair }) => {
     const [selectedMale, setSelectedMale] = useState('');
     const [selectedFemale, setSelectedFemale] = useState('');
     const [selectedNest, setSelectedNest] = useState(''); // Define selectedNest state
     const [selectedDateOfBeginning, setSelectedDateOfBeginning] = useState(''); // Define selectedDateOfBeginning state
-
     // Separate female and male birds
     const femaleBirds = birds.filter(bird => bird.sex === 'Female');
     const maleBirds = birds.filter(bird => bird.sex === 'Male');
@@ -340,6 +337,9 @@ const PairManager = () => {
         setPairs([...pairs, newPair]);
     };
 
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === 'dark';
+
     return (
         <Container maxWidth="lg" sx={{ mt: 4 }}>
             <TextField
@@ -362,55 +362,44 @@ const PairManager = () => {
                     <Grid container item xs={12} key={rowIndex} spacing={2}> {/* Added spacing={2} */}
                         {row.map((pair, pairIndex) => (
                             <Grid item xs={12} sm={4} key={pairIndex}>
-                                <Card sx={{ marginTop: "12px" }} >
-
-                                    {/* Bird Cards */}
+                                <Card sx={{
+                                    marginTop: "12px",
+                                    backgroundColor: isDarkMode ? theme.palette.background.default : theme.palette.background.paper,
+                                    color: isDarkMode ? theme.palette.text.primary : theme.palette.text.secondary,
+                                    padding: 2,
+                                    boxShadow: isDarkMode ? '0 3px 5px rgba(0,0,0,0.5)' : '0 3px 5px rgba(0,0,0,0.1)',
+                                    borderRadius: 2,
+                                }}>
                                     <Grid container spacing={1.5}>
-                                        {/* First Column: Male Bird Card */}
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12} sm={12} md={6}>
                                             <BirdCard bird={pair.male} index={pairIndex * 2} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} color={pair.male.color} />
                                         </Grid>
-
-                                        {/* Second Column: Female Bird Card */}
-                                        <Grid item xs={12} sm={6}>
+                                        <Grid item xs={12} sm={12} md={6}>
                                             <BirdCard bird={pair.female} index={pairIndex * 2 + 1} nest={pair.nest} dateOfBeginning={pair.dateOfBeginning} color={pair.female.color} />
                                         </Grid>
                                     </Grid>
 
-                                    {/* Pair Information */}
-                                    {/*<Grid container paddingTop={1} spacing={1} alignItems="center" justifyContent={'flex'}>
-                                        <Grid item xs={12} sm={12}>
-                                            <Typography variant="body2" color="textSecondary">
-                                                <b>Pair Number:</b> {pairs.findIndex(p => p === pair) + 1}
-                                            </Typography>
-
-                                            <Typography paddingTop={0.3} variant="body2" color="textSecondary">
-                                                <b>Nest:</b> {pair.nest}
-                                            </Typography>
-
-                                            <Typography paddingTop={0.3} variant="body2" color="textSecondary">
-                                                <b>Date of Beginning:</b> {pair.dateOfBeginning}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>*/}
-
-                                    {/* TABS - CLUTCHES AND EGGS */}
-                                    <Grid item maxWidth="sm" >
-
+                                    <Grid item maxWidth="sm">
                                         <Grid container justifyContent="center">
-                                            <Box sx={{ width: '100%', borderBottom: 1, borderColor: 'divider' }}>
+                                            <Box sx={{
+                                                width: '100%',
+                                                borderBottom: 1,
+                                                borderColor: 'divider',
+                                                backgroundColor: isDarkMode ? theme.palette.background.default : theme.palette.background.paper,
+                                            }}>
                                                 <Tabs
                                                     value={tabValue}
                                                     onChange={handleTabChange}
-                                                    aria-label="basic tabs example"
+                                                    aria-label="bird-pair-tabs"
                                                     variant="scrollable"
                                                     scrollButtons="auto"
                                                     sx={{
-                                                        minHeight: 'unset', // Ensure minHeight is unset for smaller tabs
+                                                        minHeight: 'unset',
                                                         '& .MuiTab-root': {
-                                                            minWidth: 'auto', // Adjust the minimum width of tabs
-                                                            padding: '6px 12px', // Add padding to tabs for better touch area
-                                                            fontSize: '0.8rem', // Reduce font size for smaller screens
+                                                            minWidth: 'auto',
+                                                            padding: '6px 12px',
+                                                            fontSize: '0.8rem',
+                                                            color: isDarkMode ? theme.palette.text.primary : theme.palette.text.secondary,
                                                         },
                                                     }}
                                                 >
@@ -420,11 +409,12 @@ const PairManager = () => {
                                             </Box>
                                         </Grid>
 
-
                                         <Grid item xs={12} justifyContent="center">
-
                                             <CustomTabPanel value={tabValue} index={0}>
-                                                <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                                <TableContainer component={Paper} sx={{
+                                                    width: '100%',
+                                                    backgroundColor: isDarkMode ? theme.palette.background.default : theme.palette.background.paper,
+                                                }}>
                                                     <Table size="small">
                                                         <TableHead>
                                                             <TableRow>
@@ -452,7 +442,7 @@ const PairManager = () => {
                                                     display="flex"
                                                     justifyContent="center"
                                                     alignItems="center"
-                                                    sx={{ gap: 3 }} // Adjust `gap` as needed
+                                                    sx={{ gap: 3 }}
                                                     paddingTop="18px"
                                                 >
                                                     <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Clutches</Button>
@@ -461,7 +451,10 @@ const PairManager = () => {
                                             </CustomTabPanel>
 
                                             <CustomTabPanel value={tabValue} index={1}>
-                                                <TableContainer component={Paper} sx={{ width: '100%' }}>
+                                                <TableContainer component={Paper} sx={{
+                                                    width: '100%',
+                                                    backgroundColor: isDarkMode ? theme.palette.background.default : theme.palette.background.paper,
+                                                }}>
                                                     <Table size="small">
                                                         <TableHead>
                                                             <TableRow>
@@ -489,38 +482,24 @@ const PairManager = () => {
                                                     display="flex"
                                                     justifyContent="center"
                                                     alignItems="center"
-                                                    sx={{ gap: 3 }} // Adjust `gap` as needed
+                                                    sx={{ gap: 3 }}
                                                     paddingTop="18px"
                                                 >
                                                     <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Add Egg</Button>
                                                     <Button variant="contained" size="small" sx={{ fontSize: '0.70rem' }}>Delete Egg</Button>
                                                 </Box>
                                             </CustomTabPanel>
-
                                         </Grid>
-
-
-                                        <Grid item xs={12}>
-
-                                        </Grid>
-
                                     </Grid>
-
-
                                 </Card>
                             </Grid>
                         ))
                         }
                     </Grid >
                 ))}
-
-
-
             </Grid >
 
-
-
-
+            
             <AddPairModal birds={birds} isOpen={isModalOpen} onClose={handleCloseModal} onAddPair={handleAddPair} />
         </Container >
     );

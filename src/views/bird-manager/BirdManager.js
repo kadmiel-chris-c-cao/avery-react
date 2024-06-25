@@ -290,6 +290,15 @@ const BirdManager = () => {
     };
 
 
+    // Function to determine background color based on sex
+    const getCardColor = (sex) => {
+        return sex === 'Male'
+            ? 'rgba(181, 234, 234, 0.3)' // Light blue with 30% opacity
+            : 'rgba(255, 188, 188, 0.3)'; // Light pink with 30% opacity
+    };
+
+
+
     return (
         <Container maxWidth="lg" sx={{ mt: 4, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 'none' }}>
             <Grid container spacing={3} sx={{ boxShadow: 'none' }}>
@@ -426,7 +435,11 @@ const BirdManager = () => {
                                             overflow: 'hidden',
                                             cursor: 'pointer',
                                             transition: 'transform 0.2s',
-                                            '&:hover': { transform: 'scale(1.05)', backgroundColor: '#ecf2ff' },
+                                            backgroundColor: getCardColor(bird.sex),
+                                            '&:hover': {
+                                                transform: 'scale(1.09)',
+                                                backgroundColor: getCardColor(bird.sex), // Dynamic background color
+                                            },
                                         }}
                                         onClick={() => handleOpenModal(bird)}
                                     >
