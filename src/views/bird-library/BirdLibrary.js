@@ -14,6 +14,8 @@ import {
     DialogContent,
     DialogActions,
     Button,
+    Box,
+    useTheme,
 } from '@mui/material';
 
 // Import your bird images here
@@ -32,7 +34,6 @@ const BirdFiltering = () => {
         { id: 4, name: "Lilian's lovebird", category: 'Lovebird', imageUrl: lbird4, description: 'This is a Lilian\'s lovebird.' },
         { id: 5, name: "Blackcap", category: 'Songbird', imageUrl: sbird1, description: 'The Eurasian blackcap, usually known simply as the blackcap, is a common and widespread typical warbler. It has mainly olive-grey upperparts and pale grey underparts, and differences between the five subspecies are small.' },
         { id: 6, name: "Grey catbird", category: 'Songbird', imageUrl: sbird2, description: 'The gray catbird, also spelled grey catbird, is a medium-sized North American and Central American perching bird of the mimid family. It is the only member of the "catbird" genus Dumetella.' },
-
     ]);
 
     const [newBird, setNewBird] = useState({
@@ -78,27 +79,19 @@ const BirdFiltering = () => {
 
     const handleEditBird = () => {
         // Handle edit functionality here
-        // You can implement another modal or a form for editing
-        // You might need to manage additional state for editing
-        // For simplicity, I'm just closing the modal here
         setIsModalOpen(false);
     };
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         setSelectedImage(file);
-        // You may want to add additional logic for handling file uploads (e.g., validation, preview, etc.)
     };
 
     const handleAddBird = () => {
-        // Handle add functionality here
-        // You can collect data from form fields in the "Add Bird" modal
-        // and add a new bird to the allBirds array
-
         const newBirdData = {
             ...newBird,
             id: allBirds.length + 1,
-            imageUrl: URL.createObjectURL(selectedImage), // Use a temporary URL for preview
+            imageUrl: URL.createObjectURL(selectedImage),
         };
 
         setAllBirds((prevBirds) => [...prevBirds, newBirdData]);
@@ -112,12 +105,13 @@ const BirdFiltering = () => {
             description: '',
         });
         setSelectedImage(null);
-
         setIsAddModalOpen(false);
     };
 
+    const theme = useTheme();
+
     return (
-        <Container maxWidth="lg" sx={{ mt: 4, position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Container maxWidth="lg" sx={{ mt: 4, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: 'none' }}>
@@ -149,58 +143,69 @@ const BirdFiltering = () => {
                             </Select>
                         </FormControl>
 
-
                         <Grid container spacing={3}>
                             {filteredBirds.map((bird) => (
                                 <Grid item xs={12} sm={6} md={4} lg={3} key={bird.id}>
                                     <Paper
-                                        sx={{ p: 2, textAlign: 'center', height: '100%', borderRadius: '12px', overflow: 'hidden', cursor: 'pointer', transition: 'transform 0.2s', '&:hover': { transform: 'scale(1.05)' } }}
+                                        sx={{
+                                            p: 2,
+                                            textAlign: 'center',
+                                            height: '100%',
+                                            borderRadius: '12px',
+                                            overflow: 'hidden',
+                                            cursor: 'pointer',
+                                            
+                                            backgroundColor: theme.palette.mode === 'dark' ? '#1C465D' : '#E9F7FE',
+                                        }}
                                         onClick={() => handleOpenModal(bird)}
                                     >
-                                        <img
-                                            src={bird.imageUrl}
-                                            alt={bird.name}
-                                            style={{
+                                        <Box
+                                            sx={{
                                                 width: '100%',
-                                                maxHeight: '150px',
-                                                objectFit: 'cover',
-                                                borderRadius: '8px',
-                                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                                                aspectRatio: '1 / 1',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                overflow: 'hidden',
                                             }}
-                                        />
-                                        <Typography variant="h6" gutterBottom>
-                                            {bird.name}
-                                        </Typography>
-                                        <Typography color="textSecondary">{bird.category}</Typography>
+                                        >
+                                            <img
+                                                src={bird.imageUrl}
+                                                alt={bird.name}
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
+                                        </Box>
+                                        <Box sx={{ marginTop: '10px' }}>
+                                            <Typography variant="h6" gutterBottom>{bird.name}</Typography>
+                                            <Typography color="textSecondary" mt={-0.8}>{bird.category}</Typography>
+                                        </Box>
                                     </Paper>
                                 </Grid>
                             ))}
                         </Grid>
 
-                        {/* Add Bird Button */}
                         <Button
                             variant="contained"
                             color="primary"
                             sx={{
-                                position: 'relative',
-                                marginTop: '15px',
+                                mt: 2,
                                 width: '200px',
-                                backgroundColor: '#45a049D', // Green color for the background
-                                color: 'white', // Text color
+                                backgroundColor: '#45a049D',
+                                color: 'white',
                                 '&:hover': {
-                                    backgroundColor: '#45a049D', // Darker green on hover
+                                    backgroundColor: '#45a049',
                                 },
-                                borderRadius: '10px', // Rounded corners
-                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)', // Box shadow for depth
+                                borderRadius: '10px',
+                                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
                             }}
                             onClick={handleOpenAddModal}
                         >
                             Add Bird
                         </Button>
-                        {/* Add Bird Button End */}
-
-
-
                     </Paper>
                 </Grid>
             </Grid>
@@ -227,9 +232,7 @@ const BirdFiltering = () => {
                         <MenuItem value="Lovebird">Lovebird</MenuItem>
                         <MenuItem value="Songbird">Songbird</MenuItem>
                     </TextField>
-                    {/* Add File Input for Image Upload */}
                     <input type="file" accept="image/*" onChange={handleImageUpload} />
-                    {/* Existing TextFields */}
                     <TextField
                         label="Description"
                         fullWidth
@@ -240,19 +243,19 @@ const BirdFiltering = () => {
                         onChange={(e) => setNewBird((prev) => ({ ...prev, description: e.target.value }))}
                     />
                 </DialogContent>
-                <DialogActions sx={{ justifyContent: 'center', marginBottom: '15px' }}>
+                <DialogActions sx={{ justifyContent: 'center', mb: 2 }}>
                     <Button
                         onClick={handleCloseAddModal}
                         sx={{
-                            backgroundColor: '#FF5252', // Red color for the background
-                            color: 'white', // Text color
+                            backgroundColor: '#FF5252',
+                            color: 'white',
                             '&:hover': {
-                                backgroundColor: '#D32F2F', // Darker red on hover
+                                backgroundColor: '#D32F2F',
                             },
-                            borderRadius: '10px', // Rounded corners
-                            margin: '0 8px', // Add margin for spacing
-                            minWidth: '25px', // Set the minimum width to 25px
-                            padding: '8px', // Add padding for better visibility
+                            borderRadius: '10px',
+                            m: 1,
+                            minWidth: '25px',
+                            p: 1,
                         }}
                     >
                         Cancel
@@ -262,21 +265,19 @@ const BirdFiltering = () => {
                         color="primary"
                         disabled={!selectedImage}
                         sx={{
-                            backgroundColor: '#4CAF50', // Green color for the background
-                            color: 'white', // Text color
+                            backgroundColor: '#4CAF50',
+                            color: 'white',
                             '&:hover': {
-                                backgroundColor: '#45a049', // Darker green on hover
+                                backgroundColor: '#45a049',
                             },
-                            borderRadius: '10px', // Rounded corners
-                            margin: '0 8px', // Add margin for spacing
-                            minWidth: '25px', // Set the minimum width to 25px
-                            padding: '8px', // Add padding for better visibility
+                            borderRadius: '10px',
+                            m: 1,
+                            minWidth: '25px',
+                            p: 1,
                         }}
                     >
                         Add
                     </Button>
-
-
                 </DialogActions>
             </Dialog>
 
@@ -284,10 +285,37 @@ const BirdFiltering = () => {
             <Dialog open={isModalOpen} onClose={handleCloseModal}>
                 <DialogTitle>{selectedBird?.name}</DialogTitle>
                 <DialogContent>
-                    <img src={selectedBird?.imageUrl} alt={selectedBird?.name} style={{ width: '100%', maxHeight: '300px', objectFit: 'cover', borderRadius: '8px' }} />
-                    <Typography variant="body1" sx={{ mt: 2 }}>
-                        {selectedBird?.description}
-                    </Typography>
+                    <Box
+                        sx={{
+                            width: '400px',
+                            aspectRatio: '1 / 1',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <img
+                            src={selectedBird?.imageUrl}
+                            alt={selectedBird?.name}
+                            style={{
+                                width: '400px',
+                                height: '400px',
+                                objectFit: 'cover',
+                            }}
+                        />
+                    </Box>
+
+                    <Box sx={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '400px',
+                    }}>
+                        <Typography variant="body1" sx={{ mt: 1 }}>
+                            {selectedBird?.description}
+                        </Typography>
+                    </Box>
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleEditBird} color="primary">

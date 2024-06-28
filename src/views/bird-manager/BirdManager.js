@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 // eslint-disable-next-line
 import {
     Box, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, InputLabel, Grid, Paper,
-    Tab, Tabs, TextField, Typography, FormControl, MenuItem, Select, Card, CardContent, CardMedia, Badge,
+    Tab, Tabs, TextField, Typography, FormControl, MenuItem, Select, Card, CardContent, CardMedia, Badge, useTheme,
 } from '@mui/material';
 
 
@@ -290,13 +290,8 @@ const BirdManager = () => {
     };
 
 
-    // Function to determine background color based on sex
-    const getCardColor = (sex) => {
-        return sex === 'Male'
-            ? 'rgba(181, 234, 234, 0.3)' // Light blue with 30% opacity
-            : 'rgba(255, 188, 188, 0.3)'; // Light pink with 30% opacity
-    };
 
+    const theme = useTheme();
 
 
     return (
@@ -430,15 +425,15 @@ const BirdManager = () => {
                                     <Card
                                         sx={{
                                             maxWidth: 340,
-                                            maxHeight: 380,
+                                            maxHeight: 390,
                                             borderRadius: 2,
                                             overflow: 'hidden',
                                             cursor: 'pointer',
                                             transition: 'transform 0.2s',
-                                            backgroundColor: getCardColor(bird.sex),
+                                            backgroundColor: theme.palette.mode === 'dark' ? '#1C465D' : '#F5FCFF',
                                             '&:hover': {
                                                 transform: 'scale(1.09)',
-                                                backgroundColor: getCardColor(bird.sex), // Dynamic background color
+                                                backgroundColor: theme.palette.mode === 'dark' ? '#1C465D' : '#F5FCFF',
                                             },
                                         }}
                                         onClick={() => handleOpenModal(bird)}
@@ -455,7 +450,7 @@ const BirdManager = () => {
                                             <Grid item xs={1}>
                                                 <Badge
                                                     badgeContent={bird.status}
-                                                    color={bird.status === 'Active' ? 'success' : 'error'}
+                                                    color={bird.status === 'Active' ? 'success' : 'warning'}
                                                     sx={{ fontWeight: 'bold' }}
                                                 >
                                                 </Badge>
@@ -485,16 +480,32 @@ const BirdManager = () => {
 
 
                                         <CardContent sx={{ p: '20px', marginTop: '-20px', textAlign: 'center' }}>
-                                            <Typography variant="h4">{bird.name}</Typography>
+                                            <Grid Container sx={{maxHeight:'120px'}}>
+                                                <Grid item sm={12}>
+                                                    <Typography variant="h4" sx={{ fontSize: '1.10rem' }}>{bird.name}</Typography>
+                                                </Grid>
+                                            </Grid>
                                             <Typography variant="body2" color="textSecondary" sx={{ pt: '6px' }}>
                                                 <b>Date of Birth: </b>{bird.dateOfBirth}
                                             </Typography>
-                                            <Typography variant="body2" color="textSecondary">
+                                            <Typography variant="body2" color="textSecondary" sx={{ paddingTop: '3px' }}>
                                                 <b>Band Number: </b>{bird.bandnumber}
                                             </Typography>
-                                            <Typography variant="body2" color="textSecondary">
-                                                <b>Gender: </b>{bird.sex}
-                                            </Typography>
+
+                                            <Grid container justifyContent="center" alignItems="center">
+                                                <Grid item sm={12} sx={{ marginLeft: '-19px', paddingTop: '3px' }}>
+                                                    <Typography variant="body2" color="textSecondary">
+                                                        <b>Gender: </b>
+                                                        <Badge
+                                                            badgeContent={bird.sex}
+                                                            color={bird.sex === 'Male' ? 'primary' : 'error'}
+                                                            sx={{ fontWeight: 'bold', ml: 5 }}
+                                                        />
+                                                    </Typography>
+                                                </Grid>
+                                            </Grid>
+
+
                                             {/* Additional content here */}
                                         </CardContent>
 

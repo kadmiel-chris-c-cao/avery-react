@@ -364,10 +364,7 @@ const PairManager = () => {
                             <Grid item xs={12} sm={4} key={pairIndex}>
                                 <Card sx={{
                                     marginTop: "12px",
-                                    backgroundColor: isDarkMode ? theme.palette.background.default : theme.palette.background.paper,
-                                    color: isDarkMode ? theme.palette.text.primary : theme.palette.text.secondary,
-                                    padding: 2,
-                                    boxShadow: isDarkMode ? '0 3px 5px rgba(0,0,0,0.5)' : '0 3px 5px rgba(0,0,0,0.1)',
+                                    backgroundColor: theme.palette.mode === 'dark' ? '#1C465D' : '#F5FCFF',
                                     borderRadius: 2,
                                 }}>
                                     <Grid container spacing={1.5}>
@@ -379,7 +376,7 @@ const PairManager = () => {
                                         </Grid>
                                     </Grid>
 
-                                    <Grid item maxWidth="sm">
+                                    <Grid item maxWidth="sm" pt={3}>
                                         <Grid container justifyContent="center">
                                             <Box sx={{
                                                 width: '100%',
@@ -397,7 +394,6 @@ const PairManager = () => {
                                                         minHeight: 'unset',
                                                         '& .MuiTab-root': {
                                                             minWidth: 'auto',
-                                                            padding: '6px 12px',
                                                             fontSize: '0.8rem',
                                                             color: isDarkMode ? theme.palette.text.primary : theme.palette.text.secondary,
                                                         },
@@ -499,7 +495,7 @@ const PairManager = () => {
                 ))}
             </Grid >
 
-            
+
             <AddPairModal birds={birds} isOpen={isModalOpen} onClose={handleCloseModal} onAddPair={handleAddPair} />
         </Container >
     );
